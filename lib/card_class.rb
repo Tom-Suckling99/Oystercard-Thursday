@@ -1,7 +1,8 @@
 
 class Card 
 
-    attr_accessor :balance , :minimum_fare , :entry_station 
+    attr_accessor :balance , :minimum_fare , :entry_station, :exit_station
+    attr_reader :journeys
     TOP_UP_LIMIT = 90
     
 
@@ -9,6 +10,8 @@ class Card
         @balance = starting_balance
         @minimum_fare = 1 
         @entry_station = nil
+        @exit_station = nil
+        @journeys = []
         
     end
 
@@ -27,12 +30,12 @@ class Card
     end
 
     def touch_in(station)
+        @exit_station = nil
         @entry_station = station
         raise "card balance is below minimum balance of £#{@minimum_fare} to touch in" unless balance >= @minimum_fare
         return  
     
     end    
-
 
 
     def deduct(payment_amount)
@@ -42,7 +45,9 @@ class Card
 
     
 
-    def touch_out
+    def touch_out(station)
+        @exit_station = station
+        journey_maker(@entry_station, @exit_station)
         @entry_station = nil
         deduct(@minimum_fare)
         return
@@ -54,7 +59,13 @@ class Card
         else
             false  
         end        
-    end  
+    end 
+    
+    def journey_maker(entry, last_station)
+        journey = "Journey was from #{entry} to #{last_station}"
+        journeys << {:journey => "Journey was from #{entry} to #{last_station}"}
+
+    end
     #   
     
     
