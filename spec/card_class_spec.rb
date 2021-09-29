@@ -29,10 +29,9 @@ RSpec.describe Card do
     end
 
     it " will raise an error when balance is below minimum balance" do
-        minimum_balance = 1
         my_oystercard.balance = 0
 
-        expect {my_oystercard.touch_in(station)}.to raise_error "card balance is below minimum balance of £#{minimum_balance} to touch in"
+        expect {my_oystercard.touch_in(station)}.to raise_error "card balance is below minimum balance of £#{my_oystercard.minimum_fare} to touch in"
     end 
     
     it "touch in when a card has balance >= 1" do

@@ -1,13 +1,13 @@
 
 class Card 
 
-    attr_accessor :balance , :MINIMUM_BALANCE , :entry_station 
+    attr_accessor :balance , :minimum_fare , :entry_station 
     TOP_UP_LIMIT = 90
     
 
     def initialize(starting_balance)
         @balance = starting_balance
-        @MINIMUM_BALANCE = 1 
+        @minimum_fare = 1 
         @entry_station = nil
         
     end
@@ -28,7 +28,7 @@ class Card
 
     def touch_in(station)
         @entry_station = station
-        raise "card balance is below minimum balance of £#{@MINIMUM_BALANCE} to touch in" unless balance >= @MINIMUM_BALANCE
+        raise "card balance is below minimum balance of £#{@minimum_fare} to touch in" unless balance >= @minimum_fare
         return  
     
     end    
@@ -44,7 +44,7 @@ class Card
 
     def touch_out
         @entry_station = nil
-        deduct(@MINIMUM_BALANCE)
+        deduct(@minimum_fare)
         return
     end  
 
