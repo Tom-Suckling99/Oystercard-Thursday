@@ -1,4 +1,3 @@
-
 class Card 
 
     attr_accessor :balance , :minimum_fare , :entry_station, :exit_station
