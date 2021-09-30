@@ -12,10 +12,8 @@ class Card
         @entry_station = nil
         @exit_station = nil
         @journeys = []
-        
+        @current_journey = {}
     end
-
-       
 
     def top_up (top_up_amount)
         new_balance = @balance += top_up_amount
@@ -47,7 +45,7 @@ class Card
 
     def touch_out(station)
         @exit_station = station
-        journey_maker(@entry_station, @exit_station)
+        journey_maker()
         @entry_station = nil
         deduct(@minimum_fare)
         return
@@ -61,21 +59,11 @@ class Card
         end        
     end 
     
-    def journey_maker(entry, last_station)
-        journey = "Journey was from #{entry} to #{last_station}"
-        journeys << {:journey => "Journey was from #{entry} to #{last_station}"}
-
-    end
-    #   
-    
-    
-        
-
-
-
-        
-
-
-
-
+    def journey_maker()
+        @current_journey = {
+            :entry_station  => @entry_station,
+            :exit_station => @exit_station
+        }
+        @journeys << @current_journey
+    end 
 end

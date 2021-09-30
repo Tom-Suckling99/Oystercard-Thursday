@@ -9,7 +9,7 @@ RSpec.describe Card do
     let(:my_oystercard) { Card.new(10) }
     let(:entry_station) {double :station}
     let(:exit_station) {double :station}
-    let(:journey) {double :journey}
+    let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
     
 
        
@@ -41,8 +41,6 @@ RSpec.describe Card do
     
         expect(my_oystercard).to be_in_journey
     end
-
-
 
     it "touch in card on the barrier" do
         my_oystercard.touch_in(entry_station)
@@ -88,13 +86,13 @@ RSpec.describe Card do
     it "Should create a journey into journeys" do
         my_oystercard.touch_in(entry_station)
         my_oystercard.touch_out(exit_station)
-        expect(my_oystercard.journeys).to eq ["Journey was from #{entry_station} to #{exit_station}"]
-    end
-
-    it "Should create a journey into journeys" do
-        my_oystercard.touch_in(entry_station)
-        my_oystercard.touch_out(exit_station)
         expect(my_oystercard.journeys).to eq [journey]
     end
+
+    it 'stores a journey' do
+        my_oystercard.touch_in(entry_station)
+        my_oystercard.touch_out(exit_station)
+        expect(my_oystercard.journeys).to include journey
+      end
    
 end
